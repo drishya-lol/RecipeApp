@@ -75,7 +75,7 @@ def createRecipe(request):
         form = CreateRecipeForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('homepage')
+            return redirect('listCategory')
         else:
             return render(request, 'createRecipe.html', context={'form': form})
     form = CreateRecipeForm()
