@@ -1,11 +1,12 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Recipe, Category
+from django.contrib.auth.hashers import make_password
 
 class RegisterForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'password', 'email', ]
+        fields = ['first_name', 'last_name', 'username', 'password', 'email']
         widgets = {
             'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter a password','style': 'width: 50%; border-color: #000000; border-width: 1px; border-style: solid; border-radius: 5px;'}),
             'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a valid username','style': 'width: 50%; border-color: #000000; border-width: 1px; border-style: solid; border-radius: 5px;'}),
@@ -13,15 +14,25 @@ class RegisterForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your first name','style': 'width: 50%; border-color: #000000; border-width: 1px; border-style: solid; border-radius: 5px;'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your last name','style': 'width: 50%; border-color: #000000; border-width: 1px; border-style: solid; border-radius: 5px;'}),
         }
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.password = make_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user    
         
-class LoginForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['username', 'password']
-        widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a valid username','style': 'width: 50%; border-color: #000000; border-width: 1px; border-style: solid; border-radius: 5px;'}),
-            'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter a password','style': 'width: 50%; border-color: #000000; border-width: 1px; border-style: solid; border-radius: 5px;'}),
-        }
+class LoginForm(forms.Form):  # Change to forms.Form instead of forms.ModelForm
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control', 
+        'placeholder': 'Enter a valid username',
+        'style': 'width: 50%; border-color: #000000; border-width: 1px; border-style: solid; border-radius: 5px;'
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control', 
+        'placeholder': 'Enter a password',
+        'style': 'width: 50%; border-color: #000000; border-width: 1px; border-style: solid; border-radius: 5px;'
+    }))
+
     
 class CreateCategoryForm(forms.ModelForm):
     class Meta:

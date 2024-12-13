@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from .models import Recipe, Category
+from django.contrib import messages
 
 # Create your views here.
 def recipe(request):
@@ -19,15 +20,18 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
             if user is not None:
-                login(request, user)  # Changed from User to user
+                login(request, user)
                 return redirect('homepage')
+            else:
+                form.add_error(None, 'Invalid username or password')
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
+
 
 def register(request):
     if request.method == 'POST':    
@@ -82,3 +86,23 @@ def createRecipe(request):
     form = CreateRecipeForm()
     data = {'form': form}
     return render(request, "createRecipe.html", context = data)
+
+def editRecipe(request, pk):
+    recipe = Recipe.objects.get(id=pk)
+    if request.method == 'POST':
+        form = CreateRecipeForm(request.POST, instance=recipe)
+        if form.is_valid():
+            form.save()
+            return redirect('homepage')
+    else:
+        form = CreateRecipeForm(instance=recipe)
+    return render(request, 'editRecipe.html', {'form': form, 'recipe': recipe})
+
+def viewRecipe(request, pk):
+    recipe = Recipe.objects.get(id=pk)
+    return render(request, 'viewRecipe.html', {'recipe': recipe})
+
+def deleteRecipe(request, pk):
+    recipe = Recipe.objects.get(id=pk)
+    recipe.delete()
+    return redirect('homepage') 

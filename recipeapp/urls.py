@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from base.views import recipe, login_view, register, home, createCategory, listCategory, editCategory, deleteCategory, createRecipe
+from base.views import recipe, login_view, register, home, createCategory, listCategory, editCategory, deleteCategory, createRecipe, viewRecipe, deleteRecipe, editRecipe
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,5 +28,9 @@ urlpatterns = [
     path('listCategory/', listCategory, name='listCategory'),
     path('editCategory/<int:pk>', editCategory, name='editCategory'),
     path('deleteCategory/<int:pk>', deleteCategory, name='deleteCategory'),
-    path('createRecipe/', createRecipe, name='createRecipe')
+    path('createRecipe/', createRecipe, name='createRecipe'),
+    path('viewRecipe/<int:pk>', viewRecipe, name='viewRecipe'),
+    path('editRecipe/<int:pk>', editRecipe, name='editRecipe'),
+    path('deleteRecipe/<int:pk>', deleteRecipe, name='deleteRecipe'),
+    
 ]
