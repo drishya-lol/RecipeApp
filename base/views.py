@@ -70,15 +70,6 @@ def editCategory(request, pk):
         form = CreateCategoryForm(instance=category)
     return render(request, 'editCategory.html', {'form': form, 'category': category})
 
-def deleteCategory(request, pk):
-    if request.method == 'POST':
-        category = Category.objects.get(id=pk)
-        category.delete()
-        messages.success(request, 'Category deleted successfully')
-    return redirect('listCategory')
-
-
-
 def createRecipe(request):
     if request.method == 'POST':
         form = CreateRecipeForm(request.POST)
@@ -97,7 +88,7 @@ def editRecipe(request, pk):
         form = CreateRecipeForm(request.POST, instance=recipe)
         if form.is_valid():
             form.save()
-            return redirect('homepage')
+            return redirect('listCategory')
     else:
         form = CreateRecipeForm(instance=recipe)
     return render(request, 'editRecipe.html', {'form': form, 'recipe': recipe})
@@ -106,10 +97,19 @@ def viewRecipe(request, pk):
     recipe = Recipe.objects.get(id=pk)
     return render(request, 'viewRecipe.html', {'recipe': recipe})
 
+def deleteCategory(request, pk):
+    if request.method == 'POST':
+        category = Category.objects.get(id=pk)
+        category.delete()
+        messages.success(request, 'Category deleted successfully')
+    return redirect('listCategory')
+
 def deleteRecipe(request, pk):
-    recipe = Recipe.objects.get(id=pk)
-    recipe.delete()
-    return redirect('homepage') 
+    if request.method == 'POST':
+        recipe = Recipe.objects.get(id=pk)
+        recipe.delete()
+        messages.success(request, 'Recipe deleted successfully')
+    return redirect('listCategory') 
 
 def viewCategory(request, pk):
     try:
