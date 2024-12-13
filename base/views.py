@@ -71,9 +71,13 @@ def editCategory(request, pk):
     return render(request, 'editCategory.html', {'form': form, 'category': category})
 
 def deleteCategory(request, pk):
-    category = Category.objects.get(id=pk)
-    category.delete()
+    if request.method == 'POST':
+        category = Category.objects.get(id=pk)
+        category.delete()
+        messages.success(request, 'Category deleted successfully')
     return redirect('listCategory')
+
+
 
 def createRecipe(request):
     if request.method == 'POST':
@@ -106,3 +110,12 @@ def deleteRecipe(request, pk):
     recipe = Recipe.objects.get(id=pk)
     recipe.delete()
     return redirect('homepage') 
+
+def viewCategory(request, pk):
+    try:
+        category = Category.objects.get(id=pk)
+        recipes = category.recipe_set.all()  # Assuming the related_name for recipes is `recipe_set`
+        return render(request, 'viewCategory.html', {'category': category, 'recipes': recipes})
+    except Category.DoesNotExist:
+        messages.error(request, "The requested category does not exist.")
+        return redirect('listCategory')

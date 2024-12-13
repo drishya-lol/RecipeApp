@@ -4,8 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Recipe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">Recipe App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'homepage' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'listCategory' %}">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'createCategory' %}">Create Category</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'createRecipe' %}">Add Recipe</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+{% load custom_filters %}
+    <div class="container">
+        <div class="card mb-3 shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title">{{ recipe.name }}</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-text"><strong>Description:</strong>{{ recipe.description }} </p>
+                <p class="card-text"><strong>Ingredients:</strong></p>
+                <ul>
+                    {% comment %} {% for ingredient in recipe.ingredients.split(',') %} {% endcomment %}
+                        <li>{{ recipe.ingredients }}</li>
+                    {% comment %} {% endfor %} {% endcomment %}
+                </ul>
+                <p class="card-text"><strong>Steps:</strong></p>
+                <ol>
+                    {% comment %} {% for step in recipe.process.split('|') %} {% endcomment %}
+                        <li>{{ recipe.process }}</li>
+                    {% comment %} {% endfor %} {% endcomment %}
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+    <footer class="footer mt-5 py-3 bg-dark">
+        <div class="container text-center">
+            <span class="text-muted">Recipe App &copy; 2024</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

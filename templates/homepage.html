@@ -3,59 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Website</title>
+    <title>Homepage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 </head>
 <body class="bg-light">
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div class="container">
-            <a class="navbar-brand" href="#"><i class="bi bi-book"></i> Delicious Recipes</a>
-            <a  class="navbar-brand" href="../createRecipe">Add recipe</a>
-            <a  class="navbar-brand" href="../createCategory">Add category</a>
+            <a class="navbar-brand" href="#">Recipe App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'homepage' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'listCategory' %}">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'createCategory' %}">Create Category</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'createRecipe' %}">Add Recipe</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="container">
-        <h1 class="text-center mb-5">Featured Recipes</h1>
-        
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            {% for recipe in recipe %}
-            <div class="col">
-                <div class="card h-100 shadow-sm">
-                    <img class="card-img-top" src="{{ recipe.image_url|default:'https://via.placeholder.com/300x200' }}" alt="{{ recipe.name }}">
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">{{ recipe.name }}</h5>
-                        <div class="mb-3">
-                            <h6 class="text-muted">Ingredients:</h6>
-                            <p class="card-text">{{ recipe.ingredients }}</p>
-                        </div>
-                        <div>
-                            <h6 class="text-muted">Instructions:</h6>
-                            <p class="card-text">{{ recipe.process }}</p>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-white">
-                      <a href="{% url 'viewRecipe' recipe.id %}" class="btn btn-outline-primary w-100">View Recipe</a>
-                    </div>
-                    <div class="card-footer bg-white">
-                      <a href="{% url 'editRecipe' recipe.id %}" class="btn btn-outline-primary w-100">Edit Recipe</a>
-                    </div>
-                    <div class="card-footer bg-white">
-                      <a href="{% url 'deleteRecipe' recipe.id %}" class="btn btn-outline-primary w-100">Delete Recipe</a>
-                    </div>
-                  
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+    <div class="container text-center">
+        <h1 class="display-4">Welcome to Recipe App</h1>
+        <p class="lead">Your one-stop solution to organize and share recipes.</p>
+        <a href="{% url 'listCategory' %}" class="btn btn-primary btn-lg">Explore Categories</a>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3 mt-5">
-        <p class="mb-0">© 2023 Recipe Website. All rights reserved.</p>
+    <footer class="footer mt-5 py-3 bg-dark">
+        <div class="container text-center">
+            <span class="text-muted">Recipe App &copy; 2024</span>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
