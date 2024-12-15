@@ -38,21 +38,27 @@
             <div class="card-header bg-primary text-white">
                 <h3 class="card-title">{{ recipe.name }}</h3>
             </div>
+            <div class="card-body text-center">
+                {% if recipe.image and recipe.image.url %}
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" class="img-fluid" style="max-height: 300px; object-fit: contain;">
+                {% else %}
+                    <div class="alert alert-info">No image available</div>
+                {% endif %}
+            </div>
             <div class="card-body">
-                <p class="card-text"><strong>Description:</strong>{{ recipe.description }} </p>
+                <p class="card-text"><strong>Category: </strong>{{ recipe.category.name }}</p>
                 <p class="card-text"><strong>Ingredients:</strong></p>
                 <ul>
-                    {% comment %} {% for ingredient in recipe.ingredients.split(',') %} {% endcomment %}
-                        <li>{{ recipe.ingredients }}</li>
-                    {% comment %} {% endfor %} {% endcomment %}
+                    {% for ingredient in ingredients_list %}
+                        <li>{{ ingredient }}</li>
+                    {% endfor %}
                 </ul>
-                <p class="card-text"><strong>Steps:</strong></p>
+                <p class="card-text"><strong>Process:</strong></p>
                 <ol>
-                    {% comment %} {% for step in recipe.process.split('|') %} {% endcomment %}
-                        <li>{{ recipe.process }}</li>
-                    {% comment %} {% endfor %} {% endcomment %}
+                    {% for step in process_list %}
+                        <li>{{ step }}</li>
+                    {% endfor %}
                 </ol>
-                
             </div>
         </div>
     </div>

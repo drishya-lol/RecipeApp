@@ -72,7 +72,7 @@ def editCategory(request, pk):
 
 def createRecipe(request):
     if request.method == 'POST':
-        form = CreateRecipeForm(request.POST)
+        form = CreateRecipeForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('listCategory')
@@ -95,7 +95,14 @@ def editRecipe(request, pk):
 
 def viewRecipe(request, pk):
     recipe = Recipe.objects.get(id=pk)
-    return render(request, 'viewRecipe.html', {'recipe': recipe})
+    ingredients_list = recipe.ingredients.split(',')  # Split ingredients
+    process_list = recipe.process.split(',')          # Split process steps
+    return render(request, 'viewRecipe.html', {
+        'recipe': recipe,
+        'ingredients_list': ingredients_list,
+        'process_list': process_list
+    })
+
 
 def deleteCategory(request, pk):
     if request.method == 'POST':

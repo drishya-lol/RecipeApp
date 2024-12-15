@@ -15,8 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from base.views import recipe, login_view, register, home, createCategory, listCategory, editCategory, deleteCategory, createRecipe, viewRecipe, deleteRecipe, editRecipe, viewCategory
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,4 +37,7 @@ urlpatterns = [
     path('editRecipe/<int:pk>/', editRecipe, name='editRecipe'),
     path('deleteRecipe/<int:pk>/', deleteRecipe, name='deleteRecipe'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

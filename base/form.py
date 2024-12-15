@@ -62,10 +62,11 @@ class CreateCategoryForm(forms.ModelForm):
 class CreateRecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
-        fields = ['name', 'ingredients', 'process', 'category']
+        fields = ['name', 'ingredients', 'image', 'process', 'category']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a name for the recipe','style': 'width: 50%; border-color: #000000; border-width: 1px; border-style: solid; border-radius: 5px;'}),
             'ingredients': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter the ingredients required to make the recipe','style': 'width: 50%; border-color: #000000; border-width: 1px; border-style: solid; border-radius: 5px;'}),
+            'image': forms.FileInput(attrs={'class': 'form-control', 'placeholder': 'Upload an image for the recipe','style': 'width: 50%; border-color: #000000; border-width: 1px; border-style: solid; border-radius: 5px;'}),
             'process': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'How is the recipe made','style': 'width: 50%; border-color: #000000; border-width: 1px; border-style: solid; border-radius: 5px;'}),
             'category': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Select a category','style': 'width: 50%; border-color: #000000; border-width: 1px; border-style: solid; border-radius: 5px;'}),
         }
