@@ -40,6 +40,7 @@
                     <div class="card mb-3 shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">{{ category.name }}</h5>
+                            <p class="card-text">{{ category.description }}</p>
                             <p class="card-text">Contains {{ category.recipe_set.count }} recipes.</p>
                             <a href="{% url 'viewCategory' category.id %}" class="btn btn-primary">View Recipes</a>
                             <a href="{% url 'editCategory' category.id %}" class="btn btn-secondary">Edit</a>
